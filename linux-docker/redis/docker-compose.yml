@@ -1,0 +1,32 @@
+services:
+  redis:
+    image: redis:${REDIS_VERSION:-7.4-alpine}
+    container_name: deployer-redis
+    restart: unless-stopped
+    command: >
+      redis-server
+      --requirepass ${REDIS_PASSWORD:-MySecureRedisPass123!}
+      --appendonly yes
+      --save 900 1
+      --save 300 10
+      --maxmemory 512mb
+      --maxmemory-policy allkeys-lru
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - ./data:/data
+    environment:
+      - TZ=Asia/Taipei
+
+  redisinsight:
+    image: redis/redisinsight:${REDISINSIGHT_VERSION:-latest}
+    container_name: deployer-redisinsight
+    restart: unless-stopped
+    ports:
+      - "${REDISINSIGHT_PORT:-5540}:5540"
+    volumes:
+      - ./redisinsight_data:/data
+    depends_on:
+      - redis
+    environment:
+      - TZ=Asia/Taipei

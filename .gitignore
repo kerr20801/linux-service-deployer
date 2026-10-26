@@ -1,0 +1,19 @@
+# Environment files
+.env
+*.env.local
+
+# Persistent container data & logs
+**/data/
+**/logs/
+**/esdata/
+**/mongo_data/
+**/postgres_data/
+**/redis_data/
+**/opensearch_data/
+**/graylog_data/
+
+# OS and Editor junk
+.DS_Store
+Thumbs.db
+*.swp
+*.bak

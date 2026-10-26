@@ -1,0 +1,33 @@
+services:
+  elasticsearch:
+    image: elasticsearch:${ELK_VERSION:-8.15.0}
+    container_name: deployer-elk-es
+    restart: unless-stopped
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - "ES_JAVA_OPTS=-Xms${ES_JAVA_MEM_LIMIT:-1g} -Xmx${ES_JAVA_MEM_LIMIT:-1g}"
+      - TZ=Asia/Taipei
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    ports:
+      - "${ELASTIC_PORT:-9200}:9200"
+    volumes:
+      - ./es_data:/usr/share/elasticsearch/data
+
+  kibana:
+    image: kibana:${ELK_VERSION:-8.15.0}
+    container_name: deployer-elk-kibana
+    restart: unless-stopped
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - TZ=Asia/Taipei
+    ports:
+      - "${KIBANA_PORT:-5601}:5601"
+    depends_on:
+      - elasticsearch
