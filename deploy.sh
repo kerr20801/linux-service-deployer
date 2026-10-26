@@ -78,6 +78,7 @@ show_menu() {
     echo -e "${WHITE}           🚀 Linux Service Deployer - 服務一鍵部署工具箱            ${NC}"
     echo -e "${CYAN}========================================================================${NC}"
     echo -e " 📍 本機伺服器 IP: ${GREEN}${host_ip}${NC}  | 📁 設定檔: ${YELLOW}linux-docker/.env${NC}"
+    echo -e " ${YELLOW}⚠️  提醒：版本請依需求於 .env 自行調整，切勿直接使用預設版號！${NC}"
     echo -e "${CYAN}------------------------------------------------------------------------${NC}"
     echo -e " ${GREEN}[原生 Linux 安裝 (Host Native)]${NC}"
     echo -e "  ${WHITE}1)${NC} 🐳 安裝 Docker & Docker Compose Plugin (官方最新引擎)"
